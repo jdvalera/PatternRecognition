@@ -99,7 +99,32 @@ public class Point implements Comparable<Point> {
     private class SlopeOrder implements Comparator<Point> {
 		@Override
 		public int compare(Point p1, Point p2) {
-			return 0;
+			Double s1 = 0.0 , s2 = 0.0;
+			if (x == p1.x && y == p1.y)
+				s1 = Double.NEGATIVE_INFINITY;
+			else if (x == p1.x)
+				s1 = Double.POSITIVE_INFINITY;
+			else if (y == p1.y)
+				s1 = 0.0;
+			else
+				s1 = (double) ((p1.y - y) / (p1.x - x));
+			
+			if (x == p2.x && y == p2.y)
+				s2 = Double.NEGATIVE_INFINITY;
+			else if (x == p2.x)
+				s2 = Double.POSITIVE_INFINITY;
+			else if (y == p2.y)
+				s2 = 0.0;
+			else
+				s2 = (double) ((p2.y - y) / (p2.x - x));
+			
+			if (s1 < s2)
+				return -1;
+			else if (s1 > s2)
+				return 1;
+			else
+				return 0;
+			
 		}
     }
 
@@ -111,7 +136,7 @@ public class Point implements Comparable<Point> {
      */
     public Comparator<Point> slopeOrder() {
     	/* YOUR CODE HERE */
-		return null;
+		return new SlopeOrder();
     }
 
 
