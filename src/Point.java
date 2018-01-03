@@ -88,6 +88,8 @@ public class Point implements Comparable<Point> {
     		return -1;
     	else if (y == that.y && x < that.x)
     		return -1;
+    	else if (y == that.y && x > that.x)
+    		return 1;
     	else
     		return 0; 
     }
@@ -121,5 +123,20 @@ public class Point implements Comparable<Point> {
      */
     public static void main(String[] args) {
         /* YOUR CODE HERE */
+    	Point p1 = new Point(1,2);
+    	Point p2 = new Point(1,2);
+    	Point p3 = new Point(1,4);
+    	Point p4 = new Point(2,2);
+    	
+    	System.out.println("Degenerate line: " + p1.slopeTo(p2));
+    	System.out.println("Vertical line: " + p1.slopeTo(p3));
+    	System.out.println("Horizontal line: " + p1.slopeTo(p4));
+    	
+    	System.out.println("Point 1 bigger y value than point 2: " + p4.compareTo(p1));
+    	System.out.println("Point 1 smaller y value than point 2: " + p1.compareTo(p4));
+    	System.out.println("Same y value bigger x: " + p4.compareTo(p1));
+    	System.out.println("Same y value smaller x: " + p1.compareTo(p4));
+    	System.out.println("Same point values: " + p1.compareTo(p2));
+    	
     }
 }
