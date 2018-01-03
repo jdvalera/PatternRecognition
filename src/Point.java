@@ -8,12 +8,13 @@
  *
  ******************************************************************************/
 
+import java.util.Arrays;
 import java.util.Comparator;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class Point implements Comparable<Point> {
 
-    private final int x;     // x-coordinate of this point
+	private final int x;     // x-coordinate of this point
     private final int y;     // y-coordinate of this point
 
     /**
@@ -98,7 +99,7 @@ public class Point implements Comparable<Point> {
     
     private class SlopeOrder implements Comparator<Point> {
 		@Override
-		public int compare(Point p1, Point p2) {
+		public int compare(Point p1, Point p2) {/*
 			Double s1 = 0.0 , s2 = 0.0;
 			if (x == p1.x && y == p1.y)
 				s1 = Double.NEGATIVE_INFINITY;
@@ -124,7 +125,14 @@ public class Point implements Comparable<Point> {
 				return 1;
 			else
 				return 0;
+			*/
 			
+			if (Point.this.slopeTo(p1) < Point.this.slopeTo(p2))
+				return -1;
+			else if (Point.this.slopeTo(p1) > Point.this.slopeTo(p2))
+				return 1;
+			else
+				return 0;
 		}
     }
 
@@ -173,6 +181,21 @@ public class Point implements Comparable<Point> {
     	System.out.println("Same y value bigger x: " + p4.compareTo(p1));
     	System.out.println("Same y value smaller x: " + p1.compareTo(p4));
     	System.out.println("Same point values: " + p1.compareTo(p2));
+    	
+    	Point[] A = new Point[3];
+    	A[0] = p1;
+    	A[1] = p5;
+    	A[2] = p3;
+    	
+    	for (Point a : A) {
+    		System.out.println(a);
+    	}
+    	
+    	Arrays.sort(A, p2.slopeOrder());
+    	
+    	for (Point a : A) {
+    		System.out.println(a);
+    	}
 
     	
     }
