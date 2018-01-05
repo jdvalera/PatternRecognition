@@ -47,6 +47,10 @@ public class Point implements Comparable<Point> {
         /* DO NOT MODIFY */
         StdDraw.line(this.x, this.y, that.x, that.y);
     }
+    
+    private double slope(int p1x, int p1y, int p2x, int p2y) {
+    	return java.lang.Math.abs( (double) (p1y - p2y)/(p1x - p2x));
+    }
 
     /**
      * Returns the slope between this point and the specified point.
@@ -68,7 +72,8 @@ public class Point implements Comparable<Point> {
     	else if (y == that.y)
     		return 0.0;
     	else
-    		return (double) java.lang.Math.abs((that.y - y)/(that.x - x));
+    		return slope(x, y, that.x, that.y);
+    		//return java.lang.Math.abs( (double) (that.y - y)/(that.x - x));
     }
 
     /**
@@ -108,7 +113,7 @@ public class Point implements Comparable<Point> {
 			else if (y == p1.y)
 				s1 = 0.0;
 			else
-				s1 = (double) ((p1.y - y) / (p1.x - x));
+				s1 = slope(x, y, p1.x, p1.y);
 			
 			if (x == p2.x && y == p2.y)
 				s2 = Double.NEGATIVE_INFINITY;
@@ -117,7 +122,7 @@ public class Point implements Comparable<Point> {
 			else if (y == p2.y)
 				s2 = 0.0;
 			else
-				s2 = (double) ((p2.y - y) / (p2.x - x));
+				s2 = slope(x, y, p2.x, p2.y);
 			
 			if (s1 < s2)
 				return -1;
