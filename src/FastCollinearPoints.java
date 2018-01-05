@@ -53,8 +53,7 @@ public class FastCollinearPoints {
 					LineSegment t = new LineSegment(points[i], points[j-1]);
 					tempSegments.add(t); */
 					
-					Arrays.sort(points, j - 1 - numOfCollinear, j);
-					if (points[j-1].compareTo(points[j - 1 - numOfCollinear]) != 0) {
+					if (points[i].compareTo(points[j-1]) < 0) {
 						numOfSegments++;
 						System.out.println("Segment " + points[i] + " to " + points[j-1]);
 						LineSegment t = new LineSegment(points[i], points[j-1]);
