@@ -49,7 +49,7 @@ public class Point implements Comparable<Point> {
     }
     
     private double slope(int p1x, int p1y, int p2x, int p2y) {
-    	return java.lang.Math.abs( (double) (p1y - p2y)/(p1x - p2x));
+    	return (double) (p1y - p2y)/(p1x - p2x);
     }
 
     /**
