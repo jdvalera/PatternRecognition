@@ -68,7 +68,7 @@ public class Point implements Comparable<Point> {
     	else if (y == that.y)
     		return 0.0;
     	else
-    		return (that.y - y)/(that.x - x);
+    		return (double) (that.y - y)/(that.x - x);
     }
 
     /**
@@ -122,6 +122,14 @@ public class Point implements Comparable<Point> {
 			if (s1 < s2)
 				return -1;
 			else if (s1 > s2)
+				return 1;
+			else if (p1.y > p2.y)
+				return 1;
+			else if (p1.y < p2.y)
+				return -1;
+			else if (p1.y == p2.y && p1.x < p2.x)
+				return -1;
+			else if (p1.y == p2.y && p1.x > p2.x)
 				return 1;
 			else
 				return 0;
