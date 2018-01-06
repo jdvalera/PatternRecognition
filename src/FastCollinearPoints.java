@@ -8,9 +8,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class FastCollinearPoints {
 	
-	private LineSegment[] lineSegments = null;
 	private ArrayList<LineSegment> tempSegments = null;
-	private int numOfSegments = 0;
 	
 	public FastCollinearPoints(Point[] points) {
 		
@@ -30,9 +28,10 @@ public class FastCollinearPoints {
 					throw new java.lang.IllegalArgumentException();
 		}
 		
+		/*
 		for (Point p : points) {
 	    	System.out.println("Natural sorted: " + p);
-	    }
+	    }*/
 		
 		
 		Point[] slopeSorted = new Point[points.length - 1];
@@ -49,12 +48,12 @@ public class FastCollinearPoints {
 			}	
 			Arrays.sort(slopeSorted, points[i].slopeOrder());
 			
-			for (int l = 0; l < slopeSorted.length; l++)
-				System.out.println("Slope of " + points[i] + " to " + slopeSorted[l] + " " + points[i].slopeTo(slopeSorted[l]));
+			//for (int l = 0; l < slopeSorted.length; l++)
+				//System.out.println("Slope of " + points[i] + " to " + slopeSorted[l] + " " + points[i].slopeTo(slopeSorted[l]));
 			
 			for (int k = 1; k < slopeSorted.length; k++) {
 				
-				System.out.println("Current slope: " + points[i].slopeTo(slopeSorted[k]));
+				//System.out.println("Current slope: " + points[i].slopeTo(slopeSorted[k]));
 				
 				if (!(points[i].slopeTo(slopeSorted[k]) == points[i].slopeTo(slopeSorted[k-1]))) {
 					
@@ -63,8 +62,8 @@ public class FastCollinearPoints {
 					numOfCollinear++;
 					lastIndex = k;
 				
-					System.out.println("Num of Collinear " + numOfCollinear);
-					System.out.println("Last Index " + lastIndex);
+					//System.out.println("Num of Collinear " + numOfCollinear);
+					//System.out.println("Last Index " + lastIndex);
 				
 					if (numOfCollinear > 1) {
 						Double slopeToLast = points[i].slopeTo(slopeSorted[lastIndex]);
@@ -78,12 +77,11 @@ public class FastCollinearPoints {
 							if (slopeSorted[lastIndex].slopeTo(points[m]) == slopeToLast)
 								maxSegment = false;
 						}
-						System.out.println("NUM OF COLLINEAR: " + numOfCollinear + " NUM OF SAME: " + numOfSame);
+						//System.out.println("NUM OF COLLINEAR: " + numOfCollinear + " NUM OF SAME: " + numOfSame);
 						if (maxSegment && numOfCollinear+2 == numOfSame+1) {
-							numOfSegments++;
-							System.out.println();
-							System.out.println("Segment " + points[i] + " to " + slopeSorted[lastIndex]);
-							System.out.println();
+							//System.out.println();
+							//System.out.println("Segment " + points[i] + " to " + slopeSorted[lastIndex]);
+							//System.out.println();
 							LineSegment t = new LineSegment(points[i], slopeSorted[lastIndex]);
 							tempSegments.add(t);
 						}
@@ -97,86 +95,21 @@ public class FastCollinearPoints {
 				
 			}
 			
-			for (Point p : slopeSorted)
-				System.out.println(p);
+			//for (Point p : slopeSorted)
+				//System.out.println(p);
 			
-			System.out.println();
+			//System.out.println();
 
 		} 
-		
-		/*
-		int i = 0;
-		int j = 0;
-		int max = 0;
-		int numOfCollinear = 0;
-		
-		while (i < points.length) {
-			System.out.println("Index of i: " + i);
-			//Arrays.sort(points, i, points.length);
-			Arrays.sort(points, i, points.length, points[i].slopeOrder());
-			j = 0;
-			
-			for (int k = 0; k < points.length - 1; k++) {
-				System.out.println("Slope " + points[i] + "to " + points[k+1] + " : " + points[i].slopeTo(points[k+1])); 
-			}
-			
-			
-			   while(j < points.length) {
-				if (j > 0) {
-				if (!(points[i].slopeTo(points[j]) == Double.POSITIVE_INFINITY || points[i].slopeTo(points[j]) == 0.0
-					|| points[i].slopeTo(points[j]) == points[i].slopeTo(points[j-1])))
-				{
-					j++;
-				} else {
-					numOfCollinear++;
-					while(j < points.length && (points[i].slopeTo(points[j]) == Double.POSITIVE_INFINITY || points[i].slopeTo(points[j]) == 0.0
-							|| points[i].slopeTo(points[j]) == points[i].slopeTo(points[j-1]))) {
-						numOfCollinear++;
-						j++;
-						System.out.println("INCREMENTING j: " + j);
-					}
-					System.out.println("Num of collinear: " + numOfCollinear);
-					System.out.println("Index of j: " + j);
-					max = j;
-				}
-				
-				
-				if(numOfCollinear > 2) {
-					System.out.println("INSIDE: " + points[i] + " " + points[j-1] + " " + points[i].compareTo(points[j-1]));
-					//numOfSegments++;
-					//System.out.println("Segment " + points[i] + " to " + points[j-1]);
-					//LineSegment t = new LineSegment(points[i], points[j-1]);
-					//tempSegments.add(t); 
-					
-					if (points[i].compareTo(points[j-1]) < 0) {
-						numOfSegments++;
-						System.out.println("Segment " + points[i] + " to " + points[j-1]);
-						LineSegment t = new LineSegment(points[i], points[j-1]);
-						tempSegments.add(t);
-					} 
-						
-				}
-				numOfCollinear = 0;
-				} else {
-					j++;
-				}
-				
-			}
-			j = 0;
-			i++;
-			max = 0;
-			
-		} */
 	} 
 	
 	public int numberOfSegments() {
-		return numOfSegments;	
+		return tempSegments.size();	
 	}
 	
 	public LineSegment[] segments() {
-		lineSegments = new LineSegment[tempSegments.size()];
-		lineSegments = tempSegments.toArray(lineSegments);
-		LineSegment[] copy = lineSegments;
+		LineSegment[] copy = new LineSegment[tempSegments.size()];
+		copy = tempSegments.toArray(copy);
 		return copy;	
 	}
 
@@ -194,7 +127,7 @@ public class FastCollinearPoints {
 	    }
 
 	    // draw the points
-	    StdDraw.setPenRadius(.007);
+	    StdDraw.setPenRadius(.002);
 	    StdDraw.enableDoubleBuffering();
 	    StdDraw.setXscale(0, 32768);
 	    StdDraw.setYscale(0, 32768);
@@ -203,7 +136,7 @@ public class FastCollinearPoints {
 	        p.draw();
 	    }
 
-	    System.out.println();
+	    //System.out.println();
 	    StdDraw.show();
 
 	    // print and draw the line segments

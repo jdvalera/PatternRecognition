@@ -7,9 +7,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class BruteCollinearPoints {
 	
-	private LineSegment[] lineSegments = null;
 	private ArrayList<LineSegment> tempSegments = null;
-	private int numOfSegments = 0;
 	
 	// finds all line segments containing 4 points
 	public BruteCollinearPoints(Point[] points) {
@@ -33,7 +31,6 @@ public class BruteCollinearPoints {
 					for (int l = k+1; l < points.length; l++) {
 						if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
 								&& points[i].slopeTo(points[k]) == points[i].slopeTo(points[l])) {
-							numOfSegments++;
 							LineSegment t = new LineSegment(points[i], points[l]);
 							tempSegments.add(t);
 						}
@@ -45,37 +42,17 @@ public class BruteCollinearPoints {
 	
 	// the number of line segments
 	public int numberOfSegments() {
-		return numOfSegments;
+		return tempSegments.size();
 	}
 	
 	// the line segments
 	public LineSegment[] segments() {
-		lineSegments = new LineSegment[tempSegments.size()];
-		lineSegments = tempSegments.toArray(lineSegments);
-		LineSegment[] copy = lineSegments;
-		return copy;	
+		LineSegment[] copy = new LineSegment[tempSegments.size()];
+		copy = tempSegments.toArray(copy);
+		return copy;		
 	}
 
 	public static void main(String[] args) {
-		/*
-		Point p1 = new Point(1,1);
-		Point p2 = new Point(2,2);
-		Point p3 = new Point(3,3);
-		Point p4 = new Point(4,4);
-		
-		Point[] points = new Point[4];
-		points[0] = p1;
-		points[1] = p2;
-		points[2] = p3;
-		points[3] = p4;
-		
-		BruteCollinearPoints b = new BruteCollinearPoints(points);
-		System.out.println(b.numOfSegments);
-		LineSegment[] lines;
-		lines = b.segments();
-		for(LineSegment l : lines) {
-			System.out.println(l);
-		}*/
 		// read the n points from a file
 	    In in = new In(args[0]);
 	    int n = in.readInt();
@@ -93,7 +70,7 @@ public class BruteCollinearPoints {
 	    StdDraw.setXscale(0, 32768);
 	    StdDraw.setYscale(0, 32768);
 	    for (Point p : points) {
-	    	System.out.println(p);
+	    	//System.out.println(p);
 	        p.draw();
 	    }
 	    StdDraw.show();
