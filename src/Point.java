@@ -123,7 +123,7 @@ public class Point implements Comparable<Point> {
 				s2 = 0.0;
 			else
 				s2 = slope(x, y, p2.x, p2.y);
-			
+			/*
 			if (s1 < s2)
 				return -1;
 			else if (s1 > s2)
@@ -135,6 +135,13 @@ public class Point implements Comparable<Point> {
 			else if (p1.y == p2.y && p1.x < p2.x)
 				return -1;
 			else if (p1.y == p2.y && p1.x > p2.x)
+				return 1;
+			else
+				return 0;*/
+			
+			if (s1 < s2)
+				return -1;
+			else if (s1 > s2)
 				return 1;
 			else
 				return 0;
