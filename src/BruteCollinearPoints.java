@@ -11,27 +11,32 @@ public class BruteCollinearPoints {
 	
 	// finds all line segments containing 4 points
 	public BruteCollinearPoints(Point[] points) {
+		
+		Point[] copyOfPoints = points;
+		
 		if (points == null)
 			throw new java.lang.IllegalArgumentException();
 		
-		tempSegments = new ArrayList<LineSegment>();
-		Arrays.sort(points);
-		
-		for(int i = 0; i < points.length; i++) {
-			if (points[i] == null)
+		for (Point p:points)
+			if (p == null)
 				throw new java.lang.IllegalArgumentException();
-			if (i < points.length - 1)
-				if (points[i].compareTo(points[i+1]) == 0)
+		
+		tempSegments = new ArrayList<LineSegment>();
+		Arrays.sort(copyOfPoints);
+		
+		for(int i = 0; i < copyOfPoints.length; i++) {
+			if (i < copyOfPoints.length - 1)
+				if (copyOfPoints[i].compareTo(copyOfPoints[i+1]) == 0)
 					throw new java.lang.IllegalArgumentException();
 		}
 		
-		for (int i = 0; i < points.length; i++) {
-			for (int j = i+1; j < points.length; j++) {
-				for (int k = j+1; k < points.length; k++) {
-					for (int l = k+1; l < points.length; l++) {
-						if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
-								&& points[i].slopeTo(points[k]) == points[i].slopeTo(points[l])) {
-							LineSegment t = new LineSegment(points[i], points[l]);
+		for (int i = 0; i < copyOfPoints.length; i++) {
+			for (int j = i+1; j < copyOfPoints.length; j++) {
+				for (int k = j+1; k < copyOfPoints.length; k++) {
+					for (int l = k+1; l < copyOfPoints.length; l++) {
+						if (copyOfPoints[i].slopeTo(copyOfPoints[j]) == copyOfPoints[i].slopeTo(copyOfPoints[k])
+								&& copyOfPoints[i].slopeTo(copyOfPoints[k]) == copyOfPoints[i].slopeTo(copyOfPoints[l])) {
+							LineSegment t = new LineSegment(copyOfPoints[i], copyOfPoints[l]);
 							tempSegments.add(t);
 						}
 					}
@@ -63,6 +68,14 @@ public class BruteCollinearPoints {
 	        int y = in.readInt();
 	        points[i] = new Point(x, y);
 	    }
+	    
+	    Point[] ps = new Point[2];
+	    ps[0] = points[0];
+	    ps[1] = null;
+	    
+	    System.out.println(ps[0]);
+	    
+	    BruteCollinearPoints test = new	BruteCollinearPoints(ps);
 
 	    // draw the points
 	    StdDraw.setPenRadius(.01);
@@ -76,8 +89,8 @@ public class BruteCollinearPoints {
 	    StdDraw.show();
 
 	    // print and draw the line segments
-	    BruteCollinearPoints collinear = new BruteCollinearPoints(points);
-	    System.out.println("Number of segments: " + collinear.numberOfSegments());
+	    //BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+	    //System.out.println("Number of segments: " + collinear.numberOfSegments());
 	    for (LineSegment segment : collinear.segments()) {
 	        StdOut.println(segment);
 	        segment.draw();

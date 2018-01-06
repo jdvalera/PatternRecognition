@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,19 +11,22 @@ public class FastCollinearPoints {
 	
 	public FastCollinearPoints(Point[] points) {
 		
+		Point[] copyOfPoints = points;
+		
 		if (points == null)
 			throw new java.lang.IllegalArgumentException();
 		
+		for (Point p:points)
+			if (p == null)
+				throw new java.lang.IllegalArgumentException();
+		
 		tempSegments = new ArrayList<LineSegment>();
-		Arrays.sort(points);
+		Arrays.sort(copyOfPoints);
 
 		
-		for(int i = 0; i < points.length; i++) {
-			if (points[i] == null)
-				throw new java.lang.IllegalArgumentException();
-			
-			if (i < points.length - 1)
-				if (points[i].compareTo(points[i+1]) == 0)
+		for(int i = 0; i < copyOfPoints.length; i++) {
+			if (i < copyOfPoints.length - 1)
+				if (copyOfPoints[i].compareTo(copyOfPoints[i+1]) == 0)
 					throw new java.lang.IllegalArgumentException();
 		}
 		
@@ -34,19 +36,19 @@ public class FastCollinearPoints {
 	    }*/
 		
 		
-		Point[] slopeSorted = new Point[points.length - 1];
-		for (int i = 0; i < points.length; i++) {
+		Point[] slopeSorted = new Point[copyOfPoints.length - 1];
+		for (int i = 0; i < copyOfPoints.length; i++) {
 			
 			int idx = 0;
 			int numOfCollinear = 0;
 			int lastIndex = 0;
-			for (int k = 0; k < points.length; k++) {
+			for (int k = 0; k < copyOfPoints.length; k++) {
 				
 				if (k == i)
 					continue;
-				slopeSorted[idx++] = points[k];
+				slopeSorted[idx++] = copyOfPoints[k];
 			}	
-			Arrays.sort(slopeSorted, points[i].slopeOrder());
+			Arrays.sort(slopeSorted, copyOfPoints[i].slopeOrder());
 			
 			//for (int l = 0; l < slopeSorted.length; l++)
 				//System.out.println("Slope of " + points[i] + " to " + slopeSorted[l] + " " + points[i].slopeTo(slopeSorted[l]));
@@ -55,7 +57,7 @@ public class FastCollinearPoints {
 				
 				//System.out.println("Current slope: " + points[i].slopeTo(slopeSorted[k]));
 				
-				if (!(points[i].slopeTo(slopeSorted[k]) == points[i].slopeTo(slopeSorted[k-1]))) {
+				if (!(copyOfPoints[i].slopeTo(slopeSorted[k]) == copyOfPoints[i].slopeTo(slopeSorted[k-1]))) {
 					
 				} else {
 					
@@ -66,15 +68,15 @@ public class FastCollinearPoints {
 					//System.out.println("Last Index " + lastIndex);
 				
 					if (numOfCollinear > 1) {
-						Double slopeToLast = points[i].slopeTo(slopeSorted[lastIndex]);
+						Double slopeToLast = copyOfPoints[i].slopeTo(slopeSorted[lastIndex]);
 						Boolean maxSegment = true;
 						int numOfSame = 0;
-						for (int n = 0; n < points.length; n++)
-							if (points[i].slopeTo(slopeSorted[lastIndex]) == points[i].slopeTo(points[n]))
+						for (int n = 0; n < copyOfPoints.length; n++)
+							if (copyOfPoints[i].slopeTo(slopeSorted[lastIndex]) == copyOfPoints[i].slopeTo(copyOfPoints[n]))
 								numOfSame++;
 						
 						for (int m = i-1; m >= 0; m--) {
-							if (slopeSorted[lastIndex].slopeTo(points[m]) == slopeToLast)
+							if (slopeSorted[lastIndex].slopeTo(copyOfPoints[m]) == slopeToLast)
 								maxSegment = false;
 						}
 						//System.out.println("NUM OF COLLINEAR: " + numOfCollinear + " NUM OF SAME: " + numOfSame);
@@ -82,14 +84,14 @@ public class FastCollinearPoints {
 							//System.out.println();
 							//System.out.println("Segment " + points[i] + " to " + slopeSorted[lastIndex]);
 							//System.out.println();
-							LineSegment t = new LineSegment(points[i], slopeSorted[lastIndex]);
+							LineSegment t = new LineSegment(copyOfPoints[i], slopeSorted[lastIndex]);
 							tempSegments.add(t);
 						}
 					}
 				}
 				
 				if (k < slopeSorted.length - 1 && 
-						points[i].slopeTo(slopeSorted[k]) != points[i].slopeTo(slopeSorted[k+1])) {
+						copyOfPoints[i].slopeTo(slopeSorted[k]) != copyOfPoints[i].slopeTo(slopeSorted[k+1])) {
 					numOfCollinear = 0;
 				}
 				
