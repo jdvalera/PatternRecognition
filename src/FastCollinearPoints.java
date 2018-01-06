@@ -54,6 +54,8 @@ public class FastCollinearPoints {
 			
 			for (int k = 1; k < slopeSorted.length; k++) {
 				
+				System.out.println("Current slope: " + points[i].slopeTo(slopeSorted[k]));
+				
 				if (!(points[i].slopeTo(slopeSorted[k]) == points[i].slopeTo(slopeSorted[k-1]))) {
 					
 				} else {
@@ -76,14 +78,21 @@ public class FastCollinearPoints {
 							if (slopeSorted[lastIndex].slopeTo(points[m]) == slopeToLast)
 								maxSegment = false;
 						}
-						
+						System.out.println("NUM OF COLLINEAR: " + numOfCollinear + " NUM OF SAME: " + numOfSame);
 						if (maxSegment && numOfCollinear+2 == numOfSame+1) {
 							numOfSegments++;
+							System.out.println();
 							System.out.println("Segment " + points[i] + " to " + slopeSorted[lastIndex]);
+							System.out.println();
 							LineSegment t = new LineSegment(points[i], slopeSorted[lastIndex]);
 							tempSegments.add(t);
 						}
 					}
+				}
+				
+				if (k < slopeSorted.length - 1 && 
+						points[i].slopeTo(slopeSorted[k]) != points[i].slopeTo(slopeSorted[k+1])) {
+					numOfCollinear = 0;
 				}
 				
 			}
@@ -185,7 +194,7 @@ public class FastCollinearPoints {
 	    }
 
 	    // draw the points
-	    StdDraw.setPenRadius(.01);
+	    StdDraw.setPenRadius(.007);
 	    StdDraw.enableDoubleBuffering();
 	    StdDraw.setXscale(0, 32768);
 	    StdDraw.setYscale(0, 32768);
@@ -193,6 +202,7 @@ public class FastCollinearPoints {
 	    	//System.out.println(p);
 	        p.draw();
 	    }
+
 	    System.out.println();
 	    StdDraw.show();
 
@@ -203,6 +213,8 @@ public class FastCollinearPoints {
 	        StdOut.println(segment);
 	        segment.draw();
 	    }
+	    //collinear.segments()[1].draw();
+	    //StdOut.println("SEGMENT " + collinear.segments()[1]);
 	    StdDraw.show(); 
 	}
 
